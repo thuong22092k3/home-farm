@@ -212,7 +212,16 @@ export function AppTabs({
                 tabClassName,
               )}
             >
-              {item.icon && <span className={sizes.icon}>{item.icon}</span>}
+              {item.icon && (
+                <span
+                  className={cn(
+                    "inline-flex shrink-0 items-center justify-center overflow-hidden leading-none [&_svg]:size-full",
+                    sizes.icon,
+                  )}
+                >
+                  {item.icon}
+                </span>
+              )}
               <span>{item.label}</span>
               {item.badge !== undefined && (
                 <span
