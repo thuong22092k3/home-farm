@@ -1,0 +1,7 @@
+{
+  "USER_ROLE_ENUM": { "FARMER": "Farmer", "USER": "Customer" },
+  "NAVIGATION_GROUPS": {
+    "FARM_MANAGEMENT": "Farm management",
+    "CUSTOMER": "Customer"
+  }
+}

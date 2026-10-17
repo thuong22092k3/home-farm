@@ -1,0 +1,61 @@
+{
+  "action": { "select": "Select", "cancel": "Cancel", "confirm": "Confirm" },
+  "label": {
+    "clear_selection": "Clear selection",
+    "no_data": "No data",
+    "no_records_found": "No records found",
+    "start_date": "Start date",
+    "end_date": "End date",
+    "rows_per_page": "Rows",
+    "total_records": "{{count}} records"
+  },
+  "message": {
+    "delete": {
+      "title": "Delete this item?",
+      "content": "This action cannot be undone."
+    }
+  },
+  "app_uploader": {
+    "file": "File",
+    "preview": "Preview",
+    "remove": "Remove",
+    "max_files_error": "Maximum {{count}} files",
+    "oversized_error": "{{count}} files exceed {{size}}",
+    "upload_area_label": "File upload area",
+    "drop_files_here": "Drop files here",
+    "drag_drop_or_click": "Drag and drop or click to choose images",
+    "any_file_type": "Any file type",
+    "max_size": "Max {{size}}",
+    "up_to_files": "Up to {{count}} files",
+    "selected_files": "Selected files"
+  },
+  "file_preview": {
+    "failed_to_load_image": "Image failed to load",
+    "image_alt": "Preview",
+    "pdf_unavailable": "PDF preview unavailable",
+    "download_to_view": "Download to view",
+    "download_pdf": "Download PDF",
+    "preview_unavailable": "Preview unavailable",
+    "unsupported_file": "Unsupported {{type}}",
+    "download_file": "Download file",
+    "preview_title": "Preview {{name}}",
+    "download": "Download",
+    "close": "Close",
+    "zoom_out": "Zoom out",
+    "zoom_in": "Zoom in",
+    "rotate": "Rotate",
+    "reset": "Reset",
+    "reset_view": "Reset view"
+  },
+  "common": {
+    "message": { "image_selection_failed": "Could not select image" }
+  },
+  "theme": { "light": "Light", "dark": "Dark", "system": "System" },
+  "form": {
+    "required": {
+      "default": "This field is required",
+      "invalid_email": "Invalid email",
+      "min_one_item": "Select at least one item"
+    }
+  }
+}
