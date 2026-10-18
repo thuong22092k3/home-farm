@@ -179,7 +179,7 @@ function RoleRail({ role, locale }: { role: Role; locale: Locale }) {
   return (
     <div className="sticky top-0 z-50 grid h-11 grid-cols-[1fr_auto_1fr] border-b border-[#dfe2d4] bg-[#fffefa]/95 text-xs font-semibold backdrop-blur">
       <Link
-        href={`/${locale}/farmer`}
+        href={`/${locale}/sample/farmer`}
         className={`flex items-center justify-center gap-2 transition ${role === "farmer" ? "bg-[#143f30] text-white" : "text-[#597064] hover:bg-[#eef2e6]"}`}
       >
         <Trees className="size-4" /> {copy[locale].farmer}
@@ -193,7 +193,7 @@ function RoleRail({ role, locale }: { role: Role; locale: Locale }) {
         {locale.toUpperCase()}
       </Link>
       <Link
-        href={`/${locale}/user`}
+        href={`/${locale}/sample/user`}
         className={`flex items-center justify-center gap-2 transition ${role === "user" ? "bg-[#143f30] text-white" : "text-[#597064] hover:bg-[#eef2e6]"}`}
       >
         <UserRound className="size-4" /> {copy[locale].user}
