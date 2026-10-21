@@ -129,12 +129,6 @@ export const useAuthStore = create<AuthState>()(
   ),
 );
 
-// Helper check role đơn giản cho USER và FARMER
-export const isFarmerRole = () => {
-  const role = useAuthStore.getState().user?.role;
-  return role === UserRoleEnum.FARMER;
-};
-
 export const isUserRole = () => {
   const role = useAuthStore.getState().user?.role;
   return role === UserRoleEnum.USER;

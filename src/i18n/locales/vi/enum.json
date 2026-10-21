@@ -1,7 +1,6 @@
 {
-  "USER_ROLE_ENUM": { "FARMER": "Nhà vườn", "USER": "Khách thuê" },
+  "USER_ROLE_ENUM": { "USER": "Khách thuê" },
   "NAVIGATION_GROUPS": {
-    "FARM_MANAGEMENT": "Quản lý vườn",
     "CUSTOMER": "Khách thuê"
   }
 }

@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { VuonNhaWorkspace } from "@/components/vuon-nha-workspace";
 
 export default function Home() {
-  redirect("/vi/user");
+  return <VuonNhaWorkspace />;
 }
