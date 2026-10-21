@@ -1,30 +1,22 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import {
   BarChart3,
   Bell,
   BookOpen,
-  CalendarDays,
   ChevronRight,
   CircleHelp,
-  ClipboardList,
   FileText,
   Flower2,
-  Grid2X2,
   Heart,
   Home,
-  Languages,
   Plus,
   Search,
   Settings2,
   Sprout,
   Star,
-  Trees,
   UploadCloud,
-  UserRound,
 } from "lucide-react";
 import { AppButton } from "@/components/app-button";
 import { AppCard } from "@/components/app-card";
@@ -49,8 +41,6 @@ import { AppSkeleton, SkeletonText } from "@/components/app-skeleton";
 import { AppPagination } from "@/components/app-table/app-pagination";
 import { AppStickyActions } from "@/components/app-sticky-actions";
 import type { Locale } from "@/i18n/resources";
-
-type Role = "farmer" | "user";
 
 const copy = {
   vi: {
@@ -103,13 +93,6 @@ const copy = {
   },
 } as const;
 
-const farmerNav = [
-  [Grid2X2, "Tổng quan", "Overview"],
-  [Trees, "Sơ đồ cây", "Tree map"],
-  [ClipboardList, "Đơn thuê", "Rentals"],
-  [CalendarDays, "Nhật ký vườn", "Farm journal"],
-  [BarChart3, "Báo cáo", "Reports"],
-] as const;
 const userNav = [
   [Sprout, "Chọn cây", "Choose a tree"],
   [CircleHelp, "Cách hoạt động", "How it works"],
@@ -117,87 +100,29 @@ const userNav = [
   [Bell, "Livestream", "Livestream"],
 ] as const;
 
-export function VuonNhaWorkspace({
-  role,
-  locale,
-}: {
-  role: Role;
-  locale: Locale;
-}) {
+export function VuonNhaWorkspace() {
+  const locale: Locale = "vi";
   const c = copy[locale];
   const [view, setView] = useState("overview");
   return (
     <div className="min-h-screen bg-[#f8f7f0]">
-      <RoleRail role={role} locale={locale} />
-      {role === "farmer" ? (
-        <div className="lg:grid lg:grid-cols-[280px_1fr]">
-          <FarmerSidebar locale={locale} />
-          <main className="min-w-0 px-5 pb-24 pt-7 sm:px-8 lg:px-12">
-            <Suspense
-              fallback={
-                <div className="mb-7 h-8 w-56 animate-pulse rounded-full bg-[#e7eadf]" />
-              }
-            >
-              <WorkspaceTabs value={view} onChange={setView} c={c} />
-            </Suspense>
-            {view === "overview" ? (
-              <FarmerOverview locale={locale} />
-            ) : (
-              <ComponentGuide role={role} locale={locale} />
-            )}
-          </main>
+      <UserHeader locale={locale} />
+      <main className="px-5 pb-24 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-[1480px] pt-6">
+          <Suspense
+            fallback={
+              <div className="mb-7 h-8 w-56 animate-pulse rounded-full bg-[#e7eadf]" />
+            }
+          >
+            <WorkspaceTabs value={view} onChange={setView} c={c} />
+          </Suspense>
         </div>
-      ) : (
-        <div>
-          <UserHeader locale={locale} />
-          <main className="px-5 pb-24 sm:px-8 lg:px-12">
-            <div className="mx-auto max-w-[1480px] pt-6">
-              <Suspense
-                fallback={
-                  <div className="mb-7 h-8 w-56 animate-pulse rounded-full bg-[#e7eadf]" />
-                }
-              >
-                <WorkspaceTabs value={view} onChange={setView} c={c} />
-              </Suspense>
-            </div>
-            {view === "overview" ? (
-              <UserOverview locale={locale} />
-            ) : (
-              <ComponentGuide role={role} locale={locale} />
-            )}
-          </main>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function RoleRail({ role, locale }: { role: Role; locale: Locale }) {
-  const pathname = usePathname();
-  const otherLocale = locale === "vi" ? "en" : "vi";
-  const localeHref = pathname.replace(`/${locale}/`, `/${otherLocale}/`);
-  return (
-    <div className="sticky top-0 z-50 grid h-11 grid-cols-[1fr_auto_1fr] border-b border-[#dfe2d4] bg-[#fffefa]/95 text-xs font-semibold backdrop-blur">
-      <Link
-        href={`/${locale}/sample/farmer`}
-        className={`flex items-center justify-center gap-2 transition ${role === "farmer" ? "bg-[#143f30] text-white" : "text-[#597064] hover:bg-[#eef2e6]"}`}
-      >
-        <Trees className="size-4" /> {copy[locale].farmer}
-      </Link>
-      <Link
-        href={localeHref}
-        className="flex items-center gap-1 border-x px-4 text-[#143f30] hover:bg-[#eef2e6]"
-        aria-label="Switch language"
-      >
-        <Languages className="size-4" />
-        {locale.toUpperCase()}
-      </Link>
-      <Link
-        href={`/${locale}/sample/user`}
-        className={`flex items-center justify-center gap-2 transition ${role === "user" ? "bg-[#143f30] text-white" : "text-[#597064] hover:bg-[#eef2e6]"}`}
-      >
-        <UserRound className="size-4" /> {copy[locale].user}
-      </Link>
+        {view === "overview" ? (
+          <UserOverview locale={locale} />
+        ) : (
+          <ComponentGuide locale={locale} />
+        )}
+      </main>
     </div>
   );
 }
@@ -212,39 +137,6 @@ function Logo({ inverse = false }: { inverse?: boolean }) {
       </span>
       Vườn Nhà
     </div>
-  );
-}
-
-function FarmerSidebar({ locale }: { locale: Locale }) {
-  return (
-    <aside className="hidden min-h-[calc(100vh-44px)] bg-[#143f30] px-5 py-7 text-white lg:block">
-      <Logo inverse />
-      <p className="mb-4 mt-14 px-3 text-[11px] font-bold tracking-[.16em] text-white/45">
-        {locale === "vi" ? "QUẢN LÝ VƯỜN" : "FARM MANAGEMENT"}
-      </p>
-      <nav className="space-y-2">
-        {farmerNav.map(([Icon, vi, en], i) => (
-          <button
-            key={vi}
-            className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-semibold transition ${i === 0 ? "bg-white/12 text-white" : "text-white/68 hover:bg-white/8 hover:text-white"}`}
-          >
-            <Icon className="size-4 text-[#cde49f]" />
-            {locale === "vi" ? vi : en}
-          </button>
-        ))}
-      </nav>
-      <div className="mt-14 rounded-2xl border border-white/10 bg-white/6 p-4">
-        <p className="text-xs text-white/55">
-          {locale === "vi" ? "Vụ sắp tới" : "Next harvest"}
-        </p>
-        <p className="mt-1 text-2xl font-bold">
-          42 {locale === "vi" ? "ngày" : "days"}
-        </p>
-        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
-          <div className="h-full w-[63%] rounded-full bg-[#cde49f]" />
-        </div>
-      </div>
-    </aside>
   );
 }
 
@@ -299,123 +191,6 @@ function WorkspaceTabs({
       <div className="hidden items-center gap-2 text-xs text-[#708078] sm:flex">
         <span className="size-2 rounded-full bg-[#6fa166]" />
         Live prototype
-      </div>
-    </div>
-  );
-}
-
-function FarmerOverview({ locale }: { locale: Locale }) {
-  const c = copy[locale];
-  const stats =
-    locale === "vi"
-      ? [
-          ["Tổng số cây", "24", "18 cây đang cho trái", "🌳"],
-          ["Cây đã thuê", "16", "8 cây còn sẵn sàng", "🤝"],
-          ["Sản lượng dự kiến", "~ 1,2 tấn", "Ước tính cho vụ này", "⚖️"],
-          ["Doanh thu dự kiến", "48,5 tr", "Trước chi phí vận hành", "₫"],
-        ]
-      : [
-          ["Total trees", "24", "18 fruiting now", "🌳"],
-          ["Rented trees", "16", "8 still available", "🤝"],
-          ["Expected yield", "~ 1.2 t", "This season estimate", "⚖️"],
-          ["Expected revenue", "48.5m", "Before operating costs", "₫"],
-        ];
-  return (
-    <div className="mx-auto max-w-[1400px]">
-      <div className="vn-rise flex flex-col justify-between gap-5 md:flex-row md:items-end">
-        <div>
-          <p className="text-xs font-extrabold tracking-[.18em] text-[#347858]">
-            {c.season}
-          </p>
-          <h1 className="mt-2 text-4xl font-black tracking-[-.055em] sm:text-5xl">
-            {c.farmerTitle} <span className="inline-block">🌿</span>
-          </h1>
-          <p className="mt-2 text-[#708078]">{c.farmerSub}</p>
-        </div>
-        <AppButton
-          variant="primary"
-          size="lg"
-          leftIcon={<Plus className="size-4" />}
-        >
-          {c.addTree}
-        </AppButton>
-      </div>
-      <div className="vn-rise vn-rise-delay mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {stats.map(([label, value, note, icon]) => (
-          <AppCard key={label} className="shadow-none">
-            <div className="flex justify-between text-sm text-[#718078]">
-              <span>{label}</span>
-              <span>{icon}</span>
-            </div>
-            <p className="mt-3 text-3xl font-black tracking-tight">{value}</p>
-            <p className="mt-1 text-xs text-[#859188]">{note}</p>
-          </AppCard>
-        ))}
-      </div>
-      <section className="mt-5 grid gap-5 rounded-3xl border bg-gradient-to-r from-[#edf5dc] to-[#fbf7e9] p-7 md:grid-cols-[1fr_360px]">
-        <div>
-          <p className="text-xs font-bold tracking-[.14em] text-[#347858]">
-            {locale === "vi" ? "MÙA TRÁI ĐANG ĐẾN" : "HARVEST APPROACHING"}
-          </p>
-          <h2 className="mt-3 text-2xl font-black">
-            {locale === "vi"
-              ? "Thu hoạch dự kiến trong 42 ngày"
-              : "Harvest expected in 42 days"}
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-[#718078]">
-            {locale === "vi"
-              ? "Cập nhật nhật ký chăm sóc để khách thuê yên tâm theo dõi cây của mình."
-              : "Keep care journals up to date so renters can follow their trees with confidence."}
-          </p>
-        </div>
-        <div className="border-[#d9e2c7] md:border-l md:pl-8">
-          <p className="text-4xl font-black">63%</p>
-          <p className="text-sm text-[#718078]">
-            {locale === "vi"
-              ? "Tiến độ chăm sóc mùa vụ"
-              : "Season care progress"}
-          </p>
-          <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#dbe5d2]">
-            <div className="h-full w-[63%] rounded-full bg-[#347858]" />
-          </div>
-          <p className="mt-2 text-xs text-[#718078]">
-            12/19{" "}
-            {locale === "vi" ? "công việc đã hoàn thành" : "tasks completed"}
-          </p>
-        </div>
-      </section>
-      <div className="mt-5 grid gap-5 xl:grid-cols-2">
-        <AppLineChart
-          title={locale === "vi" ? "Sản lượng theo tuần" : "Weekly yield"}
-          description={
-            locale === "vi"
-              ? "Ước tính kg trái đạt chuẩn"
-              : "Estimated grade-A fruit in kg"
-          }
-          data={[
-            { name: "T1", value: 120 },
-            { name: "T2", value: 178 },
-            { name: "T3", value: 205 },
-            { name: "T4", value: 248 },
-            { name: "T5", value: 310 },
-          ]}
-          lines={[
-            { dataKey: "value", name: locale === "vi" ? "Sản lượng" : "Yield" },
-          ]}
-          height={220}
-        />
-        <AppBarChart
-          title={locale === "vi" ? "Công việc trong tuần" : "Work this week"}
-          data={[
-            { name: "T2", value: 8 },
-            { name: "T3", value: 12 },
-            { name: "T4", value: 7 },
-            { name: "T5", value: 15 },
-            { name: "T6", value: 10 },
-          ]}
-          height={220}
-          color="success"
-        />
       </div>
     </div>
   );
@@ -585,7 +360,7 @@ function UserOverview({ locale }: { locale: Locale }) {
   );
 }
 
-function ComponentGuide({ role, locale }: { role: Role; locale: Locale }) {
+function ComponentGuide({ locale }: { locale: Locale }) {
   const c = copy[locale];
   const [selected, setSelected] = useState("durian");
   const [orchard, setOrchard] = useState("north");
@@ -615,7 +390,7 @@ function ComponentGuide({ role, locale }: { role: Role; locale: Locale }) {
     <div className="mx-auto max-w-[1400px]">
       <div className="vn-rise mb-8">
         <p className="text-xs font-bold tracking-[.16em] text-[#347858]">
-          {role === "farmer" ? c.farmer : c.user} · DESIGN SYSTEM
+          {c.user} · DESIGN SYSTEM
         </p>
         <h1 className="mt-2 text-4xl font-black tracking-[-.05em]">
           {c.guideTitle}
