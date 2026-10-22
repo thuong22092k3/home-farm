@@ -124,8 +124,9 @@ export default function Combobox({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <SmoothButton
+      <PopoverTrigger
+        render={
+          <SmoothButton
           type='button'
           variant='outline'
           role='combobox'
@@ -140,11 +141,12 @@ export default function Combobox({
             shouldReduceMotion && '!transition-none !duration-0',
             className,
           )}
-        >
-          <span className={cn('truncate transition-colors', !selectedLabel && 'text-muted-foreground')}>{selectedLabel ?? placeholder}</span>
-          <ChevronsUpDownIcon className='ml-2 size-4 shrink-0 opacity-50 transition-colors' />
-        </SmoothButton>
-      </PopoverTrigger>
+          >
+            <span className={cn('truncate transition-colors', !selectedLabel && 'text-muted-foreground')}>{selectedLabel ?? placeholder}</span>
+            <ChevronsUpDownIcon className='ml-2 size-4 shrink-0 opacity-50 transition-colors' />
+          </SmoothButton>
+        }
+      />
       <PopoverContent
         className={cn(
           'w-[var(--radix-popover-trigger-width)] p-0',
