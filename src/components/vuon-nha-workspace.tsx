@@ -234,14 +234,14 @@ function UserOverview({ locale }: { locale: Locale }) {
   ];
   return (
     <div className="mx-auto max-w-[1480px]">
-      <section className="vn-rise grid min-h-[390px] items-center gap-10 py-10 lg:grid-cols-[1.05fr_.95fr]">
-        <div>
+      <section className="vn-rise grid min-h-[430px] items-stretch gap-10 border-b border-[#cfd6c7] py-10 lg:grid-cols-[1.05fr_.95fr]">
+        <div className="flex flex-col justify-center">
           <p className="text-xs font-extrabold tracking-[.18em] text-[#347858]">
             {locale === "vi"
               ? "THUÊ MỘT CÂY · NHẬN TRÁI CẢ MÙA"
               : "RENT A TREE · RECEIVE A SEASON"}
           </p>
-          <h1 className="mt-4 max-w-2xl text-5xl font-black leading-[.98] tracking-[-.065em] sm:text-6xl">
+          <h1 className="mt-4 max-w-2xl text-5xl font-black leading-[.94] tracking-[-.07em] sm:text-7xl">
             {c.userTitle}
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-[#718078]">
@@ -260,26 +260,36 @@ function UserOverview({ locale }: { locale: Locale }) {
             </AppButton>
           </div>
         </div>
-        <div className="relative flex min-h-[280px] items-center overflow-hidden rounded-[28px] bg-gradient-to-br from-[#dcecd2] via-[#edf1d7] to-[#f8ecc9] p-8">
-          <div>
-            <span className="rounded-full bg-white/85 px-3 py-2 text-xs font-bold text-[#d1684e]">
-              ● {locale === "vi" ? "ĐANG PHÁT SÓNG" : "LIVE NOW"}
+        <div className="group relative flex min-h-[320px] items-end overflow-hidden bg-[#173f31] p-7 text-[#f8f7f0] sm:p-10">
+          <div className="absolute -right-16 -top-20 size-72 rounded-full border border-[#cde49f]/20 transition-transform duration-700 group-hover:scale-110" />
+          <div className="absolute right-5 top-4 size-52 rounded-full border border-[#cde49f]/20 sm:right-12 sm:top-8" />
+          <div className="absolute right-16 top-14 size-36 rounded-full bg-[#d4e89f] sm:right-20 sm:top-16" />
+          <span className="absolute right-20 top-20 text-[84px] drop-shadow-xl transition duration-500 group-hover:-rotate-6 group-hover:scale-110 sm:right-24 sm:top-24">
+            🥭
+          </span>
+          <div className="relative z-10 max-w-sm">
+            <span className="inline-flex items-center gap-2 border border-[#f7e2d4]/30 bg-[#f7e2d4] px-3 py-2 text-[10px] font-black tracking-[.14em] text-[#a44f3e]">
+              <span className="size-1.5 animate-pulse rounded-full bg-[#c45445]" />
+              {locale === "vi" ? "ĐANG PHÁT SÓNG" : "LIVE NOW"}
             </span>
-            <h2 className="mt-8 max-w-xs text-2xl font-black">
+            <p className="mt-10 text-[10px] font-bold tracking-[.18em] text-[#cde49f]">
+              VƯỜN BẮC · LÔ A03
+            </p>
+            <h2 className="mt-2 max-w-xs text-3xl font-black leading-tight tracking-[-.04em]">
               {locale === "vi"
                 ? "Đi thăm vườn cùng cô Hương"
                 : "Visit the farm with Ms. Huong"}
             </h2>
-            <p className="mt-2 text-sm text-[#718078]">
-              1.2K {locale === "vi" ? "người đang xem" : "watching"}
+            <p className="mt-3 text-sm text-white/65">
+              1.2K {locale === "vi" ? "người đang xem · 18 phút" : "watching · 18 minutes"}
             </p>
           </div>
-          <div className="absolute right-8 text-[110px] drop-shadow-xl sm:right-16">
-            🥭
-          </div>
+          <span className="absolute bottom-7 right-7 text-xs font-bold tracking-[.14em] text-white/50">
+            08:32 AM
+          </span>
         </div>
       </section>
-      <div className="mb-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <div className="mb-5 mt-10 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
           <h2 className="text-2xl font-black">{c.available}</h2>
           <p className="text-sm text-[#718078]">
@@ -300,20 +310,23 @@ function UserOverview({ locale }: { locale: Locale }) {
           />
         </div>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {trees.map((tree) => (
+      <div className="grid gap-x-5 gap-y-8 sm:grid-cols-2 xl:grid-cols-4">
+        {trees.map((tree, index) => (
           <article
             key={tree.id}
-            className="group overflow-hidden rounded-2xl border bg-[#fffefa] transition hover:-translate-y-1 hover:shadow-xl"
+            className="group overflow-hidden border-t-2 border-[#173f31] bg-[#fffefa] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(20,63,48,.12)]"
           >
-            <div className="relative grid h-44 place-items-center bg-gradient-to-br from-[#8caf7d] to-[#dcedad]">
-              <span className="absolute left-4 top-4 rounded-full bg-white/85 px-3 py-1 text-[10px] font-bold text-[#347858]">
+            <div className="relative grid h-44 place-items-center overflow-hidden bg-[#dce8bc]">
+              <span className="absolute -bottom-8 -right-5 text-[120px] font-black leading-none text-[#173f31]/[.06]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="absolute left-4 top-4 border border-[#347858]/20 bg-[#f8f7f0]/90 px-3 py-1 text-[10px] font-black tracking-[.1em] text-[#347858]">
                 {locale === "vi" ? "CÒN TRỐNG" : "AVAILABLE"}
               </span>
-              <button className="absolute right-4 top-3 grid size-9 place-items-center rounded-full bg-white/85">
+              <button className="absolute right-4 top-3 grid size-9 place-items-center border border-[#173f31]/10 bg-[#f8f7f0]/90 transition hover:bg-white">
                 <Heart className="size-4" />
               </button>
-              <span className="text-6xl transition group-hover:scale-110">
+              <span className="relative text-6xl transition duration-500 group-hover:-translate-y-1 group-hover:scale-110">
                 {tree.emoji}
               </span>
             </div>
