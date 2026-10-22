@@ -96,16 +96,15 @@ export default function Combobox({
     [onSearch, searchDebounce],
   );
 
-  // Load initial async options when popover opens
-  useEffect(() => {
-    if (open && onSearch && asyncOptions.length === 0 && !loading) {
+  const handleOpenChange = (nextOpen: boolean) => {
+    setOpen(nextOpen);
+    if (nextOpen && onSearch && asyncOptions.length === 0 && !loading) {
       setLoading(true);
-      onSearch('').then((results) => {
-        setAsyncOptions(results);
-        setLoading(false);
-      });
+      void onSearch('')
+        .then(setAsyncOptions)
+        .finally(() => setLoading(false));
     }
-  }, [open, onSearch, asyncOptions.length, loading]);
+  };
 
   // Clean up debounce on unmount
   useEffect(() => {
@@ -123,7 +122,7 @@ export default function Combobox({
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger
         render={
           <SmoothButton
@@ -177,7 +176,7 @@ export default function Combobox({
 
             {!loading && displayOptions.length > 0 && (
               <CommandGroup>
-                {displayOptions.map((option, index) => (
+                {displayOptions.map((option) => (
                   <CommandItem key={option.value} value={option.value} keywords={[option.label]} disabled={option.disabled} onSelect={handleSelect}>
                     <CheckIcon className={cn('mr-2 size-4 shrink-0', value === option.value ? 'opacity-100' : 'opacity-0')} />
                     {option.label}
