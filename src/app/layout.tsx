@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     "Thuê một cây, theo dõi từng mùa trái qua ảnh, video và nhật ký chăm sóc. Vườn Nhà đưa trái cây từ nhà vườn đến tận nhà.",
   applicationName: "Vườn Nhà",
   alternates: { canonical: "/" },
+  verification: {
+    google: "t44YdMRQk0GbdY2AckYZ4T1v-M867vnrVP83ItgjPuE",
+  },
   icons: {
     icon: "/avt.png",
     apple: "/avt.png",
