@@ -1,7 +1,8 @@
 export const siteConfig = {
   name: "Vườn Nhà",
   legalName: "Trương Minh Trí",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  // Keep production SEO links valid even when the Vercel env var is missing.
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://home-farm-two.vercel.app",
   phone: "+84377996467",
   phoneDisplay: "0377 996 467",
   address: {
