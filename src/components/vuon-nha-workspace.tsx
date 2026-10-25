@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useMemo, useState } from "react";
+import Image from "next/image";
 import {
   BarChart3,
   Bell,
@@ -8,7 +9,6 @@ import {
   ChevronRight,
   CircleHelp,
   FileText,
-  Flower2,
   Heart,
   Home,
   Plus,
@@ -40,6 +40,7 @@ import {
 import { AppSkeleton, SkeletonText } from "@/components/app-skeleton";
 import { AppPagination } from "@/components/app-table/app-pagination";
 import { AppStickyActions } from "@/components/app-sticky-actions";
+import { siteConfig } from "@/config/site";
 import type { Locale } from "@/i18n/resources";
 
 const copy = {
@@ -132,9 +133,13 @@ function Logo({ inverse = false }: { inverse?: boolean }) {
     <div
       className={`flex items-center gap-3 text-xl font-black tracking-[-.04em] ${inverse ? "text-white" : "text-[#143f30]"}`}
     >
-      <span className="grid size-10 place-items-center rounded-xl bg-[#cde49f] text-[#143f30]">
-        <Flower2 className="size-5 fill-current" />
-      </span>
+      <Image
+        src="/avt.png"
+        alt="Logo Vườn Nhà"
+        width={40}
+        height={40}
+        className="size-10 rounded-xl object-cover"
+      />
       Vườn Nhà
     </div>
   );
@@ -198,40 +203,14 @@ function WorkspaceTabs({
 
 function UserOverview({ locale }: { locale: Locale }) {
   const c = copy[locale];
-  const trees = [
-    {
-      id: "SR-03",
-      kind: "Ri6",
-      kg: "25–40",
-      days: 46,
-      price: "2.200.000",
-      emoji: "🌳",
-    },
-    {
-      id: "SR-05",
-      kind: "Ri6",
-      kg: "30–45",
-      days: 53,
-      price: "2.400.000",
-      emoji: "🌿",
-    },
-    {
-      id: "SR-07",
-      kind: "Monthong",
-      kg: "35–50",
-      days: 41,
-      price: "2.900.000",
-      emoji: "🌳",
-    },
-    {
-      id: "SR-08",
-      kind: "Ri6",
-      kg: "30–45",
-      days: 42,
-      price: "2.400.000",
-      emoji: "🌱",
-    },
-  ];
+  const trees = siteConfig.seededCatalog.trees.map((tree, index) => ({
+    id: tree.id,
+    kind: tree.variety.replace("Sầu riêng ", ""),
+    kg: tree.yield.replace(" kg", ""),
+    days: tree.daysToHarvest,
+    price: tree.price.toLocaleString("vi-VN"),
+    emoji: ["🌳", "🌿", "🌳", "🌱"][index] ?? "🌳",
+  }));
   return (
     <div className="mx-auto max-w-[1480px]">
       <section className="vn-rise grid min-h-[430px] items-stretch gap-10 border-b border-[#cfd6c7] py-10 lg:grid-cols-[1.05fr_.95fr]">
