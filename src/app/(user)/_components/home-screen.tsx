@@ -1,0 +1,9 @@
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Heart, Play, QrCode, ShieldCheck, Truck } from "lucide-react";
+import { TreeGrid } from "@/components/user-navigation/tree-grid";
+import { Button, Title } from "@/components/user-navigation/shared-ui";
+
+export function HomeScreen() {
+  return <><section className="vn-hero"><Image src="/background.png" alt="Trang trại tại nhà" fill priority /><div className="vn-hero-copy"><p>MÙA VƯỜN 2026 · ĐANG MỞ NHẬN NUÔI</p><h1>Mỗi chiếc lá,<br />một câu chuyện thật.</h1><span>Chọn cây bạn yêu, theo dõi hành trình lớn lên và nhận trọn mùa quả sạch.</span><div><Button href="/explore">Khám phá cây trồng <ArrowRight /></Button><Button href="/livestream" light><Play />Xem trực tiếp</Button></div></div><Link className="vn-live-card" href="/livestream"><em>● ĐANG LIVE</em><b>Thăm vườn xoài cùng chú Bảy</b><span>248 người đang xem</span><Play /></Link></section><div className="vn-proof"><span><ShieldCheck />100% vườn xác minh</span><span><QrCode />Truy xuất nguồn gốc</span><span><Truck />Chuỗi lạnh tận nhà</span><span><Heart />Đồng hành cùng nông dân</span></div><section className="vn-section"><div className="vn-section-title"><Title eyebrow="GỢI Ý CHO GIA ĐÌNH BẠN" title="Cây đang chờ người nhận nuôi" /><Link href="/explore">Xem tất cả <ArrowRight /></Link></div><TreeGrid /></section><section className="vn-how"><div><Title eyebrow="TỪ VƯỜN ĐẾN BÀN ĂN" title="Một hành trình bạn có thể nhìn thấy." /><Button href="/my-garden">Xem vườn mẫu</Button></div>{["Chọn cây & gói mùa vụ", "Theo dõi cây mỗi tuần", "Nhận trọn mùa thu hoạch"].map((title, index) => <article key={title}><b>0{index + 1}</b><span><strong>{title}</strong><small>{["Khám phá theo vùng, loại và sản lượng.", "Nhật ký, livestream và dữ liệu IoT.", "Giao tận nhà hoặc về vườn tự hái."][index]}</small></span></article>)}</section></>;
+}

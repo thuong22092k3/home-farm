@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Keep production builds from overwriting an active dev server's HMR cache.
+  distDir: process.env.NODE_ENV === "development" ? ".next" : ".next-build",
   experimental: {
     agentFeedback: true,
   },

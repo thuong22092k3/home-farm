@@ -11,6 +11,7 @@ type AuthState = {
   user: User | null;
   isAuthenticated: boolean;
 
+  signIn: (credentials: { identifier: string; remember: boolean }) => void;
   setUser: (data: User) => void;
   setUserMeta: (data: Pick<User, "role" | "username">) => void;
   logout: () => void;
@@ -34,6 +35,7 @@ function clearAuthCookies() {
   deleteCookie(ACCESS_TOKEN_KEY);
   deleteCookie(REFRESH_TOKEN_KEY);
   deleteCookie(ROLE_COOKIE_KEY);
+  deleteCookie("remember_account");
 }
 
 function persistUserToStorage(user: User) {
@@ -53,6 +55,28 @@ export const useAuthStore = create<AuthState>()(
     (set) => ({
       user: null,
       isAuthenticated: false,
+
+      signIn: ({ identifier, remember }) => {
+        const username = identifier.trim() || "mai.anh@email.com";
+        const user: User = {
+          userId: 1,
+          actorType: "USER",
+          role: UserRoleEnum.USER,
+          accessToken: `demo-access-${Date.now()}`,
+          refreshToken: `demo-refresh-${Date.now()}`,
+          username,
+          vendorId: 0,
+          vendorCode: "",
+          vendorName: "",
+        };
+        const expires = remember ? 7 : 1 / 48;
+        setCookie(ACCESS_TOKEN_KEY, user.accessToken, expires);
+        setCookie(REFRESH_TOKEN_KEY, user.refreshToken, expires);
+        setCookie(ROLE_COOKIE_KEY, user.role, expires);
+        setCookie("remember_account", remember ? username : "", expires);
+        persistUserToStorage(user);
+        set({ user, isAuthenticated: true });
+      },
 
       setUser: (data: User) => {
         setAuthCookies(data.accessToken, data.refreshToken, data.role);

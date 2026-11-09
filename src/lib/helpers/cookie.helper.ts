@@ -7,8 +7,8 @@ const COOKIE_OPTIONS = {
   sameSite: "strict" as const,
 };
 
-export const setCookie = (key: string, value: string): void => {
-  Cookies.set(key, value, COOKIE_OPTIONS);
+export const setCookie = (key: string, value: string, expires = 7): void => {
+  Cookies.set(key, value, { ...COOKIE_OPTIONS, expires });
 };
 
 export const getCookie = (key: string): string | undefined => {

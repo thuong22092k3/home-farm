@@ -1,0 +1,5 @@
+"use client";
+import { ArrowRight, Droplets, Play, Plus, Sun, ThermometerSun } from "lucide-react";
+import { Button, Title } from "@/components/user-navigation/shared-ui";
+
+export function GardenScreen(){return <section className="vn-section"><div className="vn-section-title"><Title eyebrow="CHÀO BUỔI SÁNG, MAI ANH" title="Vườn của tôi" sub="Cây A12 vừa có cập nhật mới."/><Button href="/explore" light><Plus/>Nhận nuôi thêm</Button></div><div className="vn-garden"><div>🌳<i>🥭</i><Button href="/livestream"><Play/>Camera trực tiếp</Button></div><section><p>● ĐANG PHÁT TRIỂN TỐT　 <small>NGÀY 42 / 180</small></p><h2>Xoài Cát Hòa Lộc <i>A12</i></h2><span>Giai đoạn ra hoa · cập nhật 2 giờ trước</span><div className="vn-progress"><i/><small>Gieo trồng　　Ra hoa　　 Đậu quả　　 Thu hoạch</small></div><div className="vn-iot"><span><ThermometerSun/><small>NHIỆT ĐỘ</small><b>26.4°C</b></span><span><Droplets/><small>ĐỘ ẨM</small><b>68%</b></span><span><Sun/><small>ÁNH SÁNG</small><b>7.2 giờ</b></span></div><Button href="/journal">Xem nhật ký sinh trưởng <ArrowRight/></Button></section></div></section>}

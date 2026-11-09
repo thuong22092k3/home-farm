@@ -1,0 +1,7 @@
+import Image from "next/image";
+import { CalendarDays, Leaf, MapPin, MessageCircle, ShieldCheck, Star, UserRound } from "lucide-react";
+import { BackLink, Button } from "@/components/user-navigation/shared-ui";
+
+export function TreeDetailScreen() {
+  return <section className="vn-section"><BackLink href="/explore">Khám phá / Xoài Cát Hòa Lộc A12</BackLink><div className="vn-detail"><div className="vn-tree360"><Image src="/images/orchard-farmer.jpg" alt="Cây xoài Cát Hòa Lộc A12" fill priority sizes="50vw"/><b>↻ Kéo để xem toàn cảnh</b></div><div className="vn-detail-copy"><p className="vn-tags">VIETGAP　·　ĐÃ XÁC MINH</p><h1>Xoài Cát Hòa Lộc <i>Mã cây A12</i></h1><span><MapPin />Vườn chú Bảy · Cái Bè, Tiền Giang</span><div className="vn-stars"><Star />4.9 · 28 đánh giá</div><p>Cây 4 năm tuổi, tán khỏe và đang ở giai đoạn ra hoa. Bạn nhận toàn bộ sản lượng, theo dõi qua camera và nhật ký minh bạch.</p><div className="vn-metrics"><span><Leaf /><small>SẢN LƯỢNG</small><b>18–22kg</b></span><span><CalendarDays /><small>THU HOẠCH</small><b>Tháng 06</b></span><span><ShieldCheck /><small>CAM KẾT</small><b>Tối thiểu 18kg</b></span></div><article className="vn-farmer"><UserRound/> <span><small>NGƯỜI CHĂM SÓC</small><b>Chú Bảy Nguyễn</b></span><button><MessageCircle /></button></article><div className="vn-buy"><span><small>Trọn vụ 6 tháng</small><b>1.890.000đ</b></span><Button href="/plans">Chọn cây này</Button></div></div></div></section>;
+}
