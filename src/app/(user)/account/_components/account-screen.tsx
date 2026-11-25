@@ -1,10 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "sonner";
 import {
   ArrowRight,
   CalendarDays,
   CheckCircle2,
   Clock3,
+  Copy,
   Gift,
   Leaf,
   MapPin,
@@ -21,7 +25,18 @@ const orderStatuses = [
   { label: "Đang giao", value: 1, icon: Truck },
 ] as const;
 
+const rentalCode = "TREE-A12-261109";
+
 export function AccountScreen() {
+  async function copyRentalCode() {
+    try {
+      await navigator.clipboard.writeText(rentalCode);
+      toast.success("Đã sao chép mã cây.");
+    } catch {
+      toast.error("Không thể sao chép mã cây.");
+    }
+  }
+
   return (
     <section className="mx-auto max-w-6xl px-4 py-6 md:px-8 md:py-8 lg:mx-0 lg:mr-[4vw] lg:max-w-none lg:px-0">
       <p className="mb-6 text-xl font-black text-[#397958]">
@@ -103,16 +118,22 @@ export function AccountScreen() {
         <div className="mb-4 flex flex-wrap items-start justify-between gap-3 border-b border-[#e5e9e1] pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <b className="text-sm">TREE-A12-261109</b>
-              <button className="rounded border border-[#dce2d5] px-2 py-1 text-[10px] text-[#6c7e74]">
-                Sao chép
+              <b className="text-sm">{rentalCode}</b>
+              <button
+                type="button"
+                aria-label="Sao chép mã cây"
+                onClick={copyRentalCode}
+                className="inline-flex size-6 shrink-0 items-center justify-center gap-1 rounded-md border border-[#dce2d5] text-xs! text-[#597266] hover:bg-[#f3f5ee] sm:w-auto sm:px-1.5"
+              >
+                <Copy className="size-3" aria-hidden="true" />
+                <span className="hidden sm:inline">Sao chép</span>
               </button>
             </div>
             <small className="mt-1 block text-[#718077]">
               Bắt đầu 09.11.2026
             </small>
           </div>
-          <span className="bg-[#eaf1d0] px-3 py-1.5 text-[10px] font-black text-[#397958]">
+          <span className="inline-flex rounded-full border border-[#c4d6a4] bg-[#eaf1d0] px-3 py-1.5 text-[10px] font-black text-[#397958]">
             ĐANG CHĂM SÓC
           </span>
         </div>

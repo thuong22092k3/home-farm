@@ -1,6 +1,6 @@
 "use client";
 
-import { AUTH_TOKEN_KEYS } from "@/lib/constants/auth.constant";
+import { AUTH_ROLE_COOKIE_KEY, AUTH_TOKEN_KEYS, AUTH_USER_STORAGE_KEY } from "@/lib/constants/auth.constant";
 import { UserRoleEnum } from "@/lib/enum/user-role.enum";
 import { deleteCookie, setCookie } from "@/lib/helpers/cookie.helper";
 import { User } from "@/types/auth.type";
@@ -12,41 +12,44 @@ type AuthState = {
   isAuthenticated: boolean;
 
   signIn: (credentials: { identifier: string; remember: boolean }) => void;
-  setUser: (data: User) => void;
+  setUser: (data: User, remember?: boolean) => void;
   setUserMeta: (data: Pick<User, "role" | "username">) => void;
   logout: () => void;
 };
 
 const ACCESS_TOKEN_KEY = AUTH_TOKEN_KEYS.ACCESS_TOKEN;
 const REFRESH_TOKEN_KEY = AUTH_TOKEN_KEYS.REFRESH_TOKEN;
-const ROLE_COOKIE_KEY = "auth_role";
 
 function setAuthCookies(
   accessToken: string,
   refreshToken: string,
   role: string,
+  expires: number,
 ) {
-  setCookie(ACCESS_TOKEN_KEY, accessToken);
-  setCookie(REFRESH_TOKEN_KEY, refreshToken);
-  setCookie(ROLE_COOKIE_KEY, role);
+  setCookie(ACCESS_TOKEN_KEY, accessToken, expires);
+  if (refreshToken) setCookie(REFRESH_TOKEN_KEY, refreshToken, expires);
+  else deleteCookie(REFRESH_TOKEN_KEY);
+  setCookie(AUTH_ROLE_COOKIE_KEY, role, expires);
 }
 
 function clearAuthCookies() {
   deleteCookie(ACCESS_TOKEN_KEY);
   deleteCookie(REFRESH_TOKEN_KEY);
-  deleteCookie(ROLE_COOKIE_KEY);
+  deleteCookie(AUTH_ROLE_COOKIE_KEY);
   deleteCookie("remember_account");
 }
 
 function persistUserToStorage(user: User) {
   if (typeof localStorage !== "undefined") {
-    localStorage.setItem("auth_user", JSON.stringify(user));
+    localStorage.setItem(AUTH_USER_STORAGE_KEY, JSON.stringify(user));
   }
 }
 
 function clearUserFromStorage() {
   if (typeof localStorage !== "undefined") {
-    localStorage.removeItem("auth_user");
+    if (typeof localStorage !== "undefined") {
+    localStorage.removeItem(AUTH_USER_STORAGE_KEY);
+  }
   }
 }
 
@@ -72,14 +75,14 @@ export const useAuthStore = create<AuthState>()(
         const expires = remember ? 7 : 1 / 48;
         setCookie(ACCESS_TOKEN_KEY, user.accessToken, expires);
         setCookie(REFRESH_TOKEN_KEY, user.refreshToken, expires);
-        setCookie(ROLE_COOKIE_KEY, user.role, expires);
+        setCookie(AUTH_ROLE_COOKIE_KEY, user.role, expires);
         setCookie("remember_account", remember ? username : "", expires);
         persistUserToStorage(user);
         set({ user, isAuthenticated: true });
       },
 
-      setUser: (data: User) => {
-        setAuthCookies(data.accessToken, data.refreshToken, data.role);
+      setUser: (data, remember = true) => {
+        setAuthCookies(data.accessToken, data.refreshToken, data.role, remember ? 7 : 1 / 48);
         persistUserToStorage(data);
         set({ user: data, isAuthenticated: true });
       },
@@ -139,7 +142,7 @@ export const useAuthStore = create<AuthState>()(
           return;
         }
 
-        const stored = localStorage.getItem("auth_user");
+        const stored = localStorage.getItem(AUTH_USER_STORAGE_KEY);
         if (stored) {
           try {
             state.user = JSON.parse(stored);

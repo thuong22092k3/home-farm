@@ -1,4 +1,4 @@
-import { AUTH_TOKEN_KEYS } from "@/lib/constants/auth.constant";
+import { AUTH_ROLE_COOKIE_KEY, AUTH_TOKEN_KEYS, AUTH_USER_STORAGE_KEY } from "@/lib/constants/auth.constant";
 import { ENDPOINTS } from "@/lib/constants/endpoints.constant";
 import {
   deleteCookie,
@@ -10,7 +10,7 @@ import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
 const ACCESS_TOKEN_KEY = AUTH_TOKEN_KEYS.ACCESS_TOKEN;
 const REFRESH_TOKEN_KEY = AUTH_TOKEN_KEYS.REFRESH_TOKEN;
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://api.example.com";
+  (process.env.NEXT_PUBLIC_API_URL || "https://home-farm-api.vercel.app").replace(/\/+$/, "");
 
 type ApiErrorPayload = {
   success?: boolean;
@@ -129,7 +129,10 @@ const processQueue = (
 const clearAuthData = () => {
   deleteCookie(ACCESS_TOKEN_KEY);
   deleteCookie(REFRESH_TOKEN_KEY);
-  localStorage.removeItem("auth_user");
+  deleteCookie(AUTH_ROLE_COOKIE_KEY);
+  if (typeof localStorage !== "undefined") {
+    localStorage.removeItem(AUTH_USER_STORAGE_KEY);
+  }
 };
 
 apiClient.interceptors.request.use(

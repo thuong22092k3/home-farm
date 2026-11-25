@@ -14,7 +14,12 @@ export function UserShell({ children }: { children: ReactNode }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const isSidebarScreen =
     pathname === "/account" ||
-    userDrawerItems.some((item) => item.href === pathname);
+    pathname.startsWith("/account/") ||
+    userDrawerItems.some((item) =>
+      !item.href.startsWith("/trees/") &&
+      (item.href === pathname ||
+        (item.href.startsWith("/products/") && pathname.startsWith("/products/"))),
+    );
 
   useEffect(() => {
     const media = window.matchMedia("(min-width: 1024px)");
@@ -46,7 +51,7 @@ export function UserShell({ children }: { children: ReactNode }) {
             <Menu className="size-5 stroke-[1.5]" />
           </button>
         )}
-        <main className={isSidebarScreen ? "lg:ml-[calc(4vw+324px)]" : ""}>{children}</main>
+        <main className={isSidebarScreen ? "vn-my-page" : undefined}>{children}</main>
         <MobileBottomNavigation />
       </div>
     </div>

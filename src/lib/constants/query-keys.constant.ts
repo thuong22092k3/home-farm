@@ -13,6 +13,15 @@ import type { QueryClient } from "@tanstack/react-query";
 export const QUERY_KEYS = {
   AUTH: "AUTH",
   USER: "USER",
+  FARMS: "FARMS",
+  PLOTS: "PLOTS",
+  PLANS: "PLANS",
+  ORDERS: "ORDERS",
+  CONTRACTS: "CONTRACTS",
+  DIARIES: "DIARIES",
+  LIVESTREAMS: "LIVESTREAMS",
+  NOTIFICATIONS: "NOTIFICATIONS",
+  MARKETPLACE: "MARKETPLACE",
 } as const;
 
 /**

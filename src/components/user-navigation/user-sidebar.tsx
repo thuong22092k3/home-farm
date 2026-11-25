@@ -38,7 +38,7 @@ export function UserSidebar({
         >
           <X className="size-6 stroke-[1.5]" />
         </button>
-        <h2 className="!mb-7 !ml-2 !mt-16 !text-2xl !font-black !tracking-[-0.04em] !text-black">
+        <h2 className="!mb-7 !ml-2 !mt-16 !text-2xl !font-black !tracking-[-0.04em] !text-black lg:!mt-3">
           MY PAGE
         </h2>
         <nav className="!overflow-visible !p-0">

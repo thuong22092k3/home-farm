@@ -1,7 +1,21 @@
-import Link from "next/link";
-import { BellRing, ChevronRight, Droplets, PackageCheck, Video } from "lucide-react";
+"use client";
 import { Title } from "@/components/user-navigation/shared-ui";
+import { useNotificationsQuery, useReadNotificationMutation } from "@/data/api/notification/notification.hooks";
+import { useAuthStore } from "@/stores/auth-store";
 
-const notifications = [[BellRing,"Cây A12 vừa có cập nhật","Đợt hoa đầu đã nở đều.","/journal"],[Video,"Livestream sau 15 phút","Cùng chú Bảy kiểm tra vườn.","/livestream"],[PackageCheck,"Đơn OCOP đang được giao","Dự kiến giao trong hôm nay.","/orders"],[Droplets,"Độ ẩm đã về mức lý tưởng","Hệ thống tưới hoàn tất.","/journal"]] as const;
-
-export function NotificationsScreen(){return <section className="vn-narrow"><Title eyebrow="CÓ 3 TIN MỚI" title="Thông báo" sub="Cập nhật từ cây, nhà vườn và đơn hàng."/><div className="vn-tabs"><button>Tất cả</button><button>Cây của tôi</button><button>Đơn hàng</button></div><div className="vn-notices">{notifications.map(([Icon,title,description,href],index)=><Link className={index<3?"new":""} key={title} href={href}><i><Icon/></i><span><b>{title}</b><small>{description}</small><em>{index===0?"2 giờ trước":"Hôm qua"}</em></span><ChevronRight/></Link>)}</div></section>}
+export function NotificationsScreen() {
+  const id = useAuthStore((state) => state.user?.userId);
+  const notifications = useNotificationsQuery(typeof id === "string" ? id : undefined);
+  const markRead = useReadNotificationMutation();
+  return <section className="vn-narrow">
+    <Title eyebrow="CẬP NHẬT TỪ NHÀ VƯỜN" title="Thông báo" />
+    {typeof id !== "string" ? <p>Vui lòng đăng nhập để xem thông báo.</p> :
+      notifications.isPending ? <p>Đang tải thông báo…</p> :
+      notifications.isError ? <p>Không tải được thông báo.</p> :
+      !notifications.data.length ? <p>Bạn chưa có thông báo.</p> :
+      notifications.data.map((item) => <article key={item.id} className="my-4 border-b pb-4">
+        <p>{item.title}</p>
+        {!item.readAt && <button type="button" disabled={markRead.isPending} onClick={() => markRead.mutate(item.id)}>Đánh dấu đã đọc</button>}
+      </article>)}
+  </section>;
+}
