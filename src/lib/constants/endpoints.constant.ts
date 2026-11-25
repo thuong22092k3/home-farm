@@ -1,7 +1,21 @@
 export const ENDPOINTS = {
   AUTH: {
-    LOGIN: "/api/v1/auth/admin/login",
-    REFRESH: "/api/v1/auth/admin/refresh",
-    LOGOUT: "/api/v1/auth/admin/logout",
+    LOGIN: "/api/v1/auth/login",
+    REGISTER: "/api/v1/auth/register",
+    ME: "/api/v1/auth/me",
+    REFRESH: "/api/v1/auth/refresh",
+    LOGOUT: "/api/v1/auth/logout",
   },
-};
+  FARMS: { BASE: "/api/v1/farms" },
+  PLOTS: { BASE: "/api/v1/plots" },
+  PLANS: { BASE: "/api/v1/plans" },
+  ORDERS: { BASE: "/api/v1/orders" },
+  CONTRACTS: { BASE: "/api/v1/contracts" },
+  DIARIES: { BASE: "/api/v1/diaries" },
+  IOT_READINGS: { BASE: "/api/v1/iot/readings" },
+  LIVESTREAMS: { BASE: "/api/v1/livestreams" },
+  NOTIFICATIONS: { BASE: "/api/v1/notifications" },
+  MARKET_LISTINGS: { BASE: "/api/v1/market-listings" },
+  REVIEWS: { BASE: "/api/v1/reviews" },
+  PAYMENTS: { BASE: "/api/v1/payments" },
+} as const;

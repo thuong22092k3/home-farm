@@ -9,7 +9,7 @@ export type RoleCode = UserRoleEnum;
 
 // Normalised auth user mirroring AuthUserData from API
 export type User = {
-  userId: number;
+  userId: number | string;
   actorType: string;
   role: UserRoleEnum;
   accessToken: string;

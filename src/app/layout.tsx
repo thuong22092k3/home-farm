@@ -1,6 +1,8 @@
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { AppI18nProvider } from "@/components/i18n-provider";
+import { QueryProvider } from "@/components/theme-provider/query-provider";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -80,7 +82,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
           }}
         />
-        <AppI18nProvider locale="vi">{children}</AppI18nProvider>
+        <QueryProvider>
+          <AppI18nProvider locale="vi">{children}</AppI18nProvider>
+        </QueryProvider>
+        <Toaster richColors closeButton position="top-right" />
       </body>
     </html>
   );
