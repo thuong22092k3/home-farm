@@ -10,5 +10,7 @@ export type Order = ApiEntity & {
   recipientPhone?: string;
   total: number;
   status: string;
+  paymentExpiresAt?: number;
+  paymentStatus?: string;
   harvestDate: string;
 };

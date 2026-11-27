@@ -7,6 +7,9 @@ import type { OrderFilters, CreateOrderRequest } from "./order.req";
 export const createOrderAPI = (data: CreateOrderRequest): Promise<Order> =>
   apiClient.post(ENDPOINTS.ORDERS.BASE, data);
 
+export const getOrderAPI = (id: string): Promise<Order> =>
+  apiClient.get(`${ENDPOINTS.ORDERS.BASE}/${encodeURIComponent(id)}`);
+
 export const getOrdersAPI = (params?: Partial<BasePaginationRequest<OrderFilters>>): Promise<BasePaginationResponse<Order[]>> =>
   apiClient.get(ENDPOINTS.ORDERS.BASE, { params: params });
 

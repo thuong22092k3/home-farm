@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { PackageCheck, Sprout, Truck } from "lucide-react";
 import { Title } from "@/components/user-navigation/shared-ui";
 import { useOrdersQuery } from "@/data/api/order/order.hooks";
@@ -83,6 +84,13 @@ function OrderCard({ order }: { order: Order }) {
         </span>
         <PackageCheck className="shrink-0" aria-hidden="true" />
       </div>
+      {order.status === "PENDING_PAYMENT" && order.paymentExpiresAt && (
+        <footer className="px-4 pb-4">
+          <Link className="vn-btn" href={`/checkout?orderId=${encodeURIComponent(order.id)}`}>
+            Tiếp tục thanh toán
+          </Link>
+        </footer>
+      )}
     </article>
   );
 }

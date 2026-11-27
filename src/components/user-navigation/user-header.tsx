@@ -43,7 +43,7 @@ export function UserHeader() {
       </nav>
       <div>
         <Link href="/notifications"><Bell /><i>3</i></Link>
-        <Link href="/products/mat-ong-hoa-ca-phe"><ShoppingBag /><i>2</i></Link>
+        <Link href="/products/mat-ong-hoa-ca-phe" aria-label="Giỏ hàng"><ShoppingBag /><i>2</i></Link>
         <Link className="vn-avatar" href="/account">MA</Link>
       </div>
     </header>

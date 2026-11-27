@@ -15,6 +15,7 @@ export const ENDPOINTS = {
   IOT_READINGS: { BASE: "/api/v1/iot/readings" },
   LIVESTREAMS: { BASE: "/api/v1/livestreams" },
   NOTIFICATIONS: { BASE: "/api/v1/notifications" },
+  MESSAGES: { BASE: "/api/v1/messages" },
   MARKET_LISTINGS: { BASE: "/api/v1/market-listings" },
   REVIEWS: { BASE: "/api/v1/reviews" },
   PAYMENTS: { BASE: "/api/v1/payments" },

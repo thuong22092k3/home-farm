@@ -8,5 +8,6 @@ import { createPaymentIntentAPI } from "./payment.api";
 
 export const useCreatePaymentIntentMutation = () => useMutation({
   mutationFn: createPaymentIntentAPI,
+  retry: false,
   meta: { invalidatesQuery: [QUERY_KEYS.ORDERS] },
 });

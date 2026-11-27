@@ -1,10 +1,12 @@
-import type { ApiEntity } from "../types/base.type";
+import type { PaymentProvider } from "./payment.req";
 
-export type PaymentIntent = ApiEntity & {
+export type PaymentIntent = {
+  id: string;
   orderId: string;
-  customerId: string;
-  provider: string;
+  provider: PaymentProvider;
   amount: number;
   status: string;
   checkoutUrl: string;
+  mode: "SANDBOX";
+  expiresAt: number;
 };

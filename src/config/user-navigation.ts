@@ -1,12 +1,10 @@
 import {
   Bell,
-  CreditCard,
   Droplets,
   Gift,
   Home,
   PackageCheck,
   Search,
-  ShoppingCart,
   Sprout,
   Store,
   Truck,
@@ -17,20 +15,10 @@ import {
 
 export const userDrawerItems = [
   { href: "/login", label: "Đăng nhập", group: "Bắt đầu", icon: User },
-  {
-    href: "/trees/xoai-cat-hoa-loc-a12",
-    label: "Chi tiết cây 360°",
-    group: "Nhận nuôi",
-    icon: Sprout,
-  },
+  { href: "/account", label: "Tài khoản của tôi", group: "Bắt đầu", icon: UserRound },
+  { href: "/orders", label: "Đơn hàng", group: "Bắt đầu", icon: Truck },
   { href: "/plans", label: "Chọn gói", group: "Nhận nuôi", icon: Gift },
   { href: "/livestream", label: "Livestream", group: "Nhận nuôi", icon: Video },
-  {
-    href: "/checkout",
-    label: "Thanh toán",
-    group: "Nhận nuôi",
-    icon: CreditCard,
-  },
   {
     href: "/confirmation",
     label: "Xác nhận hợp đồng",
@@ -50,13 +38,6 @@ export const userDrawerItems = [
     group: "Thu hoạch",
     icon: PackageCheck,
   },
-  {
-    href: "/products/mat-ong-hoa-ca-phe",
-    label: "Chi tiết & giỏ hàng",
-    group: "Mua sắm",
-    icon: ShoppingCart,
-  },
-  { href: "/orders", label: "Đơn hàng", group: "Tài khoản", icon: Truck },
 ] as const;
 
 export const userBottomTabs = [
