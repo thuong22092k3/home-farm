@@ -102,7 +102,8 @@ export function AuthScreen({ kind }: { kind: AuthScreenKind }) {
           },
           remember,
         );
-        router.push("/");
+        const redirect = new URLSearchParams(window.location.search).get("redirect");
+        router.push(redirect?.startsWith("/checkout?") ? redirect : "/");
       } catch {
         return;
       }

@@ -12,8 +12,8 @@ export function NotificationsScreen() {
     {typeof id !== "string" ? <p>Vui lòng đăng nhập để xem thông báo.</p> :
       notifications.isPending ? <p>Đang tải thông báo…</p> :
       notifications.isError ? <p>Không tải được thông báo.</p> :
-      !notifications.data.length ? <p>Bạn chưa có thông báo.</p> :
-      notifications.data.map((item) => <article key={item.id} className="my-4 border-b pb-4">
+      !notifications.data?.data.length ? <p>Bạn chưa có thông báo.</p> :
+      notifications.data?.data.map((item) => <article key={item.id} className="my-4 border-b pb-4">
         <p>{item.title}</p>
         {!item.readAt && <button type="button" disabled={markRead.isPending} onClick={() => markRead.mutate(item.id)}>Đánh dấu đã đọc</button>}
       </article>)}

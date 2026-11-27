@@ -22,10 +22,10 @@ export interface PaginatedResponse<T> extends BaseResponse<T> {
 export type BasePaginationResponse<T = unknown, E = unknown> = {
   success: boolean;
   code: number;
-  errorCode: string | null;
+  errorCode?: string | null;
   messageCode: string | null;
   message: string | null;
-  detail: string | null;
+  detail?: string | null;
   data: T;
   page: number;
   size: number;
@@ -33,6 +33,7 @@ export type BasePaginationResponse<T = unknown, E = unknown> = {
   totalPages: number;
   hasNext: boolean;
   hasPrevious: boolean;
+  timestamp: number;
   extra?: E;
 };
 

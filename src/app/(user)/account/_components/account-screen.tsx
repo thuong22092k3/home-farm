@@ -38,7 +38,7 @@ export function AccountScreen() {
   }
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-6 md:px-8 md:py-8 lg:mx-0 lg:mr-[4vw] lg:max-w-none lg:px-0">
+    <section className="mx-auto max-w-6xl px-4 py-6 md:px-8 md:py-8 lg:mx-0 lg:max-w-none lg:px-0 lg:pt-10">
       <p className="mb-6 text-xl font-black text-[#397958]">
         TÀI KHOẢN CỦA TÔI
       </p>

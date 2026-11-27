@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { PackageCheck, Sprout, Truck } from "lucide-react";
 import { Title } from "@/components/user-navigation/shared-ui";
 import { useOrdersQuery } from "@/data/api/order/order.hooks";
@@ -32,7 +33,7 @@ export function OrdersScreen() {
   const id = useAuthStore((state) => state.user?.userId);
   const orders = useOrdersQuery(typeof id === "string" ? id : undefined);
   const [filter, setFilter] = useState<(typeof filters)[number]["id"]>("all");
-  const visibleOrders = orders.data?.filter(({ status }) =>
+  const visibleOrders = orders.data?.data?.filter(({ status }) =>
     filter === "all" || status === (filter === "shipping" ? "FULFILLING" : "COMPLETED"),
   );
 
@@ -48,7 +49,7 @@ export function OrdersScreen() {
             onClick={() => setFilter(id)}
             className="rounded-full border border-[#d8e1d3] bg-white px-4 py-2 text-xs font-bold transition-colors aria-pressed:bg-[#143f30] aria-pressed:text-white"
           >
-            {label}{id === "all" && orders.data ? ` ${orders.data.length}` : ""}
+            {label}{id === "all" && orders.data?.data ? ` ${orders.data?.data.length}` : ""}
           </button>
         ))}
       </div>
@@ -83,6 +84,13 @@ function OrderCard({ order }: { order: Order }) {
         </span>
         <PackageCheck className="shrink-0" aria-hidden="true" />
       </div>
+      {order.status === "PENDING_PAYMENT" && order.paymentExpiresAt && (
+        <footer className="px-4 pb-4">
+          <Link className="vn-btn" href={`/checkout?orderId=${encodeURIComponent(order.id)}`}>
+            Tiếp tục thanh toán
+          </Link>
+        </footer>
+      )}
     </article>
   );
 }

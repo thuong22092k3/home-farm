@@ -52,7 +52,7 @@ export function UserShell({ children }: { children: ReactNode }) {
           </button>
         )}
         <main className={isSidebarScreen ? "vn-my-page" : undefined}>{children}</main>
-        <MobileBottomNavigation />
+        {pathname !== "/checkout" && <MobileBottomNavigation />}
       </div>
     </div>
   );

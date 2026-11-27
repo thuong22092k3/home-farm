@@ -19,6 +19,6 @@ export function TreeGrid({ repeat = false }: { repeat?: boolean }) {
     return <p className="py-10 text-sm text-[#a44f3e]">Không tải được danh sách cây. Vui lòng kiểm tra kết nối API.</p>;
   }
 
-  const items = repeat ? plotsQuery.data : plotsQuery.data.slice(0, 3);
-  return <div className="vn-tree-grid">{items.map((plot, index) => <Link href={`/trees/${plot.id}`} key={plot.id} className="vn-tree-card"><div style={{ background: ["#e7f1b4", "#ffe2aa", "#d5ebc1"][index % 3] }}><Image src={getPlotImage(plot)} alt={plot.cropType} fill sizes="(max-width: 720px) 50vw, 28vw" /><em>{plot.status === "AVAILABLE" ? "Đang mở nhận nuôi" : plot.status}</em><Heart /></div><small>{getFarmName(farmsQuery.data, plot.farmId)}</small><h3>{plot.cropType}</h3><footer><b>{formatVnd(plot.price)}<small>/ vụ</small></b><span><Leaf />{plot.season}</span></footer></Link>)}</div>;
+  const items = repeat ? plotsQuery.data?.data : plotsQuery.data?.data.slice(0, 3);
+  return <div className="vn-tree-grid">{items.map((plot, index) => <Link href={`/trees/${plot.id}`} key={plot.id} className="vn-tree-card"><div style={{ background: ["#e7f1b4", "#ffe2aa", "#d5ebc1"][index % 3] }}><Image src={getPlotImage(plot)} alt={plot.cropType} fill sizes="(max-width: 720px) 50vw, 28vw" /><em>{plot.status === "AVAILABLE" ? "Đang mở nhận nuôi" : plot.status}</em><Heart /></div><small>{getFarmName(farmsQuery.data?.data, plot.farmId)}</small><h3>{plot.cropType}</h3><footer><b>{formatVnd(plot.price)}<small>/ vụ</small></b><span><Leaf />{plot.season}</span></footer></Link>)}</div>;
 }
