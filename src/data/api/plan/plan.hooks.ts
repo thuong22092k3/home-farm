@@ -9,4 +9,5 @@ export const planQueryKeys = {
   plans: [QUERY_KEYS.PLANS] as const,
 };
 
-export const usePlansQuery = () => useQuery({ queryKey: planQueryKeys.plans, queryFn: getPlansAPI });
+export const usePlansQuery = () =>
+  useQuery({ queryKey: planQueryKeys.plans, queryFn: () => getPlansAPI() });

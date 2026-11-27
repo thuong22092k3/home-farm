@@ -32,7 +32,7 @@ export function OrdersScreen() {
   const id = useAuthStore((state) => state.user?.userId);
   const orders = useOrdersQuery(typeof id === "string" ? id : undefined);
   const [filter, setFilter] = useState<(typeof filters)[number]["id"]>("all");
-  const visibleOrders = orders.data?.filter(({ status }) =>
+  const visibleOrders = orders.data?.data?.filter(({ status }) =>
     filter === "all" || status === (filter === "shipping" ? "FULFILLING" : "COMPLETED"),
   );
 
@@ -48,7 +48,7 @@ export function OrdersScreen() {
             onClick={() => setFilter(id)}
             className="rounded-full border border-[#d8e1d3] bg-white px-4 py-2 text-xs font-bold transition-colors aria-pressed:bg-[#143f30] aria-pressed:text-white"
           >
-            {label}{id === "all" && orders.data ? ` ${orders.data.length}` : ""}
+            {label}{id === "all" && orders.data?.data ? ` ${orders.data?.data.length}` : ""}
           </button>
         ))}
       </div>

@@ -5,7 +5,7 @@ import {
   getCookie,
   setCookie,
 } from "@/lib/helpers/cookie.helper";
-import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
+import axios, { type AxiosError, type AxiosRequestConfig, type InternalAxiosRequestConfig } from "axios";
 
 const ACCESS_TOKEN_KEY = AUTH_TOKEN_KEYS.ACCESS_TOKEN;
 const REFRESH_TOKEN_KEY = AUTH_TOKEN_KEYS.REFRESH_TOKEN;
@@ -99,7 +99,7 @@ export const getApiErrorMessage = (
   return fallback;
 };
 
-export const apiClient = axios.create({
+const transport = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
@@ -135,7 +135,7 @@ const clearAuthData = () => {
   }
 };
 
-apiClient.interceptors.request.use(
+transport.interceptors.request.use(
   (config) => {
     const token = getCookie(ACCESS_TOKEN_KEY);
     if (token) {
@@ -148,7 +148,7 @@ apiClient.interceptors.request.use(
   },
 );
 
-apiClient.interceptors.response.use(
+transport.interceptors.response.use(
   (response) => response.data,
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & {
@@ -166,7 +166,7 @@ apiClient.interceptors.response.use(
       !isAuthEndpoint
     ) {
       originalRequest._retry = true;
-      return apiClient(originalRequest);
+      return transport(originalRequest);
     }
 
     if (
@@ -180,7 +180,7 @@ apiClient.interceptors.response.use(
         })
           .then((token) => {
             originalRequest.headers.Authorization = `Bearer ${token}`;
-            return apiClient(originalRequest);
+            return transport(originalRequest);
           })
           .catch((err) => Promise.reject(err));
       }
@@ -215,7 +215,7 @@ apiClient.interceptors.response.use(
         processQueue(null, accessToken);
 
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-        return apiClient(originalRequest);
+        return transport(originalRequest);
       } catch (refreshError) {
         const normalizedRefreshError = normalizeApiError(refreshError);
         processQueue(normalizedRefreshError, null);
@@ -230,3 +230,13 @@ apiClient.interceptors.response.use(
     return Promise.reject(normalizeApiError(error));
   },
 );
+
+// The response interceptor returns the HTTP payload instead of AxiosResponse.
+type PayloadClient = {
+  get<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
+  post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T>;
+  patch<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<T>;
+  delete<T>(url: string, config?: AxiosRequestConfig): Promise<T>;
+};
+
+export const apiClient = transport as unknown as PayloadClient;

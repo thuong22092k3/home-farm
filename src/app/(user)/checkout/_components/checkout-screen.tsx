@@ -16,7 +16,7 @@ export function CheckoutScreen(){
   const createOrder=useCreateOrderMutation();
   const user=useAuthStore((state)=>state.user);
   const[name,setName]=useState("");const[phone,setPhone]=useState("");const[address,setAddress]=useState("");
-  const plan=plansQuery.data?.find((item)=>item.id===planId);
+  const plan=plansQuery.data?.data?.find((item)=>item.id===planId);
   const submit = () => {
     if (!plotQuery.data || !plan || typeof user?.userId !== "string") return;
     createOrder.mutate({ customerId: user.userId, plotId, planId, fulfillmentMethod: "HOME_DELIVERY", recipientName: name, recipientPhone: phone, shippingAddress: address }, { onSuccess: () => router.push("/orders") });
